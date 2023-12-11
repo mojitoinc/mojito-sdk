@@ -1,0 +1,30 @@
+{
+  "name": "mixers-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "@auth0/auth0-react": "^2.2.3",
+    "@mojito-inc/mixers": "^1.0.1-beta.51",
+    "@mui/icons-material": "5.11.11",
+    "@mui/material": "5.11.11",
+    "graphql": "^16.8.1",
+    "next": "13.4.12",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "13.4.12",
+    "typescript": "^5"
+  }
+}
