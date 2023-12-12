@@ -1,5 +1,5 @@
 {
-  "name": "mixers-demo",
+  "name": "sample-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,22 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "14.0.4",
+    "@types/node": "20.10.4",
+    "@types/react": "18.2.43",
+    "@types/react-dom": "18.2.17",
+    "eslint": "8.55.0",
+    "eslint-config-next": "14.0.4",
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.3.3",
     "@apollo/client": "^3.8.8",
     "@auth0/auth0-react": "^2.2.3",
-    "@mojito-inc/mixers": "^1.0.1-beta.51",
+    "@mojito-inc/mixers": "^1.0.1-beta.53",
     "@mui/icons-material": "5.11.11",
     "@mui/material": "5.11.11",
-    "graphql": "^16.8.1",
-    "next": "13.4.12",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "13.4.12",
-    "typescript": "^5"
+    "graphql": "^16.8.1"
   }
 }

@@ -14,7 +14,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       domain={ config.AUTH_DOMAIN }
       clientId={ config.AUTH_CLIENT_ID }
       authorizationParams={{
-        redirect_uri: 'http://localhost:3000/',
+        redirect_uri: config.AUTH_REDIRECT_URI,
       }}
     >
       {children}

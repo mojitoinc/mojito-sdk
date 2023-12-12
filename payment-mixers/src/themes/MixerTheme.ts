@@ -1,5 +1,4 @@
 import { ThemeConfiguration } from '@mojito-inc/mixers';
-import { createTheme } from '@mui/material/styles';
 
 export const MojitoMixerTheme: ThemeConfiguration = {
     font: {
