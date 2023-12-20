@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MojitoCheckout } from "@mojito-inc/mixers";
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "@mui/material/Button";
@@ -24,12 +24,29 @@ const MixersLayout = () => {
     }
   };
 
+  const bearerToken = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      const res = localStorage.getItem('BearerToken') ?? '';
+      return res ? JSON.parse(res) : '';
+    }
+    return '';
+  }, []);
+
   const getAuthenticationToken = async () => {
     const token = await getIdTokenClaims();
-    console.log("token", token);
+    const authToken = token?.__raw;
+    if (typeof window !== 'undefined' && authToken) {
+      localStorage.setItem('BearerToken', JSON.stringify(authToken));
+    }
     // eslint-disable-next-line no-underscore-dangle
     return token ? `${token?.__raw}` : "";
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAuthenticationToken();
+    }
+  }, [isAuthenticated]);
 
   return (
     <div>
@@ -41,19 +58,19 @@ const MixersLayout = () => {
       </Button>
       {isAuthenticated && (
         <MojitoCheckout
-          uri="https://api-sandbox.mojito.xyz/query"
+          uri="https://api-stg.mojito.xyz/query"
           userInfo={{
             email: "test@gmail.com",
           }}
           checkoutOptions={{
-            orgId: "77843c1f-231a-4452-b041-5b6389fd014f",
-            lotId: "2c2bb617-1581-40a6-a04c-dd9a128f9d5b",
+            orgId: "d086ea16-d40d-454c-84a4-64b5e940670a",
+            lotId: "f9d22f90-bbec-40e7-a0da-866bfe589247",
             quantity: 1,
             vertexEnabled: true,
-            collectionItemId: "3e0cca87-8d88-45d3-a287-da94fce59b55",
+            collectionItemId: "7d1b9193-9bb7-4b63-ae76-ddcfe4878172",
             // errorURL: `${window.location.origin}/payments/error`,
             // successURL: `${window.location.origin}/payments/success`,
-            invoiceId: 'c10fa187-34fb-4b74-acd6-16f94d18e574"',
+            // invoiceId: '',
           }}
           customTheme={MojitoMixerTheme}
           enableSardine={false}
@@ -66,22 +83,11 @@ const MixersLayout = () => {
             delivery: {
               creditCard: {
                 enableMultiSig: false,
-                enableConnectWallet: true,
                 checkoutApiKey: "pk_sbox_snvdtl3vfybgh7msvch7ni2gpan",
               },
             },
-
-            billing: {
-              isEnableExpressCheckout: true,
-              gpay: true,
-              applepay: true,
-              walletConnect: true,
-              metaMask: true,
-            },
             payment: {
               creditCard: true,
-              gpay: false,
-              applepay: false,
               walletConnect: true,
               wire: false,
               coinbase: false,
@@ -95,7 +101,7 @@ const MixersLayout = () => {
               // logoSrc: require('../../public/img/logos/sotheby-logo.svg'),
             },
             walletConnect: {
-              orgId: "77843c1f-231a-4452-b041-5b6389fd014f",
+              orgId: "d086ea16-d40d-454c-84a4-64b5e940670a",
               paperClientId: "659af8f3-6a4f-4f53-8936-ba0fa32b0db0",
               walletConnectProjectId: "89dbf545d9dfa635307b233d7b4ce5d4",
               isWeb2Login: true,
@@ -105,7 +111,7 @@ const MixersLayout = () => {
           success={false}
           sardineEnvironment="sandbox"
           show={show}
-          getAuthenticationToken={getAuthenticationToken}
+          token={bearerToken}
           debug={false}
         />
       )}
