@@ -68,12 +68,8 @@ const MixersLayout = () => {
             quantity: 1,
             vertexEnabled: true,
             collectionItemId: "7d1b9193-9bb7-4b63-ae76-ddcfe4878172",
-            // errorURL: `${window.location.origin}/payments/error`,
-            // successURL: `${window.location.origin}/payments/success`,
-            // invoiceId: '',
           }}
           customTheme={MojitoMixerTheme}
-          enableSardine={false}
           uiConfiguration={{
             walletOptions: {
               enableEmail: true,
@@ -109,7 +105,6 @@ const MixersLayout = () => {
             },
           }}
           success={false}
-          sardineEnvironment="sandbox"
           show={show}
           token={bearerToken}
           debug={false}
