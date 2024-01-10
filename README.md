@@ -1,2 +1,2 @@
 # mojito-sdk
-This is a demo integration for the SDK
+This is a demo integration for the Mojito SDK
