@@ -35,7 +35,7 @@ NPM document: [Mojito secondary marketplace](https://www.npmjs.com/package/@moji
 <br />
 Developers document: [Mojito developers document](https://developers.mojito.xyz/docs/secondary-marketplace-kit)
 <br />
-Live demo app: [Auction demo site](https://mojito-secondary-marketplace-dev.netlify.app/)
+Live demo app: [Secondary marketplace demo site](https://mojito-secondary-marketplace-dev.netlify.app/)
 <br />
 
 ## Mojito connect wallet
@@ -44,5 +44,5 @@ NPM document: [Mojito connect wallet](https://www.npmjs.com/package/@mojito-inc/
 <br />
 Developers document: [Mojito developers document](https://developers.mojito.xyz/docs/mojito-wallet-kit)
 <br />
-Live demo app: [Auction demo site](https://mojito-secondary-marketplace-dev.netlify.app/)
+Live demo app: [Connect wallet demo site](https://mojito-secondary-marketplace-dev.netlify.app/)
 <br />
