@@ -6,7 +6,12 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
-const Checkout = () => {
+interface CheckoutProps {
+  success?: boolean;
+  open?: boolean;
+}
+
+const Checkout = ({ success, open }: CheckoutProps) => {
   const { isAuthenticated, isLoading, getIdTokenClaims, loginWithPopup, logout } =
     useAuth0();
 
@@ -118,10 +123,22 @@ const Checkout = () => {
       </Button>
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <Stack width={{ xs: '100%', sm: '100%', md: '100%', lg: '50%' }} sx={{ marginTop: '24px' }} alignItems="center" direction="column" spacing={2}>
-          <TextField label="Organization Id" fullWidth required placeholder="Enter organization id" value={configData.orgId} onChange={ (e) => onChange(e.target.value, 'orgId') } />
-          <TextField label="Lot id" fullWidth required placeholder="Enter lot id" value={configData.lotId} onChange={ (e) => onChange(e.target.value, 'lotId') } />
-          <TextField label="Listing id" fullWidth required placeholder="Enter listing id" value={configData.listingId} onChange={ (e) => onChange(e.target.value, 'listingId') } />
-          <TextField label="Invoice id" fullWidth placeholder="Enter invoice id" value={configData.invoiceId} onChange={ (e) => onChange(e.target.value, 'invoiceId') } />
+          <Box sx={{ width: '100%' }}>
+            <p>Organization id</p>
+            <TextField fullWidth required placeholder="Enter organization id" value={configData.orgId} onChange={ (e) => onChange(e.target.value, 'orgId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Lot id</p>
+            <TextField fullWidth required placeholder="Enter lot id" value={configData.lotId} onChange={ (e) => onChange(e.target.value, 'lotId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Listing id</p>
+            <TextField fullWidth required placeholder="Enter listing id" value={configData.listingId} onChange={ (e) => onChange(e.target.value, 'listingId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Invoice id</p>
+            <TextField fullWidth placeholder="Enter invoice id" value={configData.invoiceId} onChange={ (e) => onChange(e.target.value, 'invoiceId') } />
+          </Box>
         </Stack>
       </Box>
       <MojitoCheckout
@@ -179,7 +196,8 @@ const Checkout = () => {
         events={{
           onEvent: () => {},
         }}
-        show={ show } />
+        show={ open || show }
+        success={ success } />
     </div>
   )
 }

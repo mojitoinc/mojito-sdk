@@ -6,13 +6,21 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
-const MixersLayout = () => {
+interface MixersLayoutProps {
+  success?: boolean;
+  open?: boolean;
+}
+
+const MixersLayout = ({ success, open }: MixersLayoutProps) => {
   const { isAuthenticated, isLoading, getIdTokenClaims, loginWithPopup, logout } =
     useAuth0();
 
   const getConfigData = React.useMemo(() => {
-    const data = sessionStorage.getItem('configData');
-    return data ? JSON.parse(data) : null;
+    if (typeof window != 'undefined') {
+      const data = sessionStorage.getItem('configData');
+      return data ? JSON.parse(data) : null;
+    }
+    return null;
   }, []);
   
   const [show, setShow] = useState(false);
@@ -109,7 +117,7 @@ const MixersLayout = () => {
   };
 
   return (
-    <div>
+    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
       <Button disabled={ isLoading } onClick={onClickLogin}>
         {isLoading ? 'Loading...' : isAuthenticated ? "Logout" : "Login"}
       </Button>
@@ -118,10 +126,22 @@ const MixersLayout = () => {
       </Button>
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <Stack width={{ xs: '100%', sm: '100%', md: '100%', lg: '50%' }} sx={{ marginTop: '24px' }} alignItems="center" direction="column" spacing={2}>
-          <TextField label="Organization Id" fullWidth required placeholder="Enter organization id" value={configData.orgId} onChange={ (e) => onChange(e.target.value, 'orgId') } />
-          <TextField label="Lot id" fullWidth required placeholder="Enter lot id" value={configData.lotId} onChange={ (e) => onChange(e.target.value, 'lotId') } />
-          <TextField label="Listing id" fullWidth required placeholder="Enter listing id" value={configData.listingId} onChange={ (e) => onChange(e.target.value, 'listingId') } />
-          <TextField label="Invoice id" fullWidth placeholder="Enter invoice id" value={configData.invoiceId} onChange={ (e) => onChange(e.target.value, 'invoiceId') } />
+          <Box sx={{ width: '100%' }}>
+            <p>Organization id</p>
+            <TextField fullWidth required placeholder="Enter organization id" value={configData.orgId} onChange={ (e) => onChange(e.target.value, 'orgId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Lot id</p>
+            <TextField fullWidth required placeholder="Enter lot id" value={configData.lotId} onChange={ (e) => onChange(e.target.value, 'lotId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Listing id</p>
+            <TextField fullWidth required placeholder="Enter listing id" value={configData.listingId} onChange={ (e) => onChange(e.target.value, 'listingId') } />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <p>Invoice id</p>
+            <TextField fullWidth placeholder="Enter invoice id" value={configData.invoiceId} onChange={ (e) => onChange(e.target.value, 'invoiceId') } />
+          </Box>
         </Stack>
       </Box>
       <MojitoCheckout
@@ -161,7 +181,7 @@ const MixersLayout = () => {
           costBreakdown: { showDiscountCode: true },
 
           paymentConfirmation: {
-            onGoTo: () => {},
+            onGoTo: () => { console.log('back to marketplace') },
           },
           global: {
             logoSrc: 'https://assets-global.website-files.com/645e63ab36fc91c80f486747/645e63ab36fc91c80f486762_Group%201.svg',
@@ -179,7 +199,8 @@ const MixersLayout = () => {
         events={{
           onEvent: () => {},
         }}
-        show={ show } />
+        success={success}
+        show={ open || show } />
     </div>
   )
 }
