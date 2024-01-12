@@ -27,7 +27,7 @@
     "start": "react-app-rewired start",
     "build": "node setup-script.js && react-app-rewired build",
     "test": "react-app-rewired test",
-    "setup": "node polyfill.js"
+    "setup": "node setup-script.js"
   },
   "eslintConfig": {
     "extends": [
