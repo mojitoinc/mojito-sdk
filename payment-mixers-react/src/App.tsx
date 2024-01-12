@@ -5,8 +5,10 @@ import Checkout from './component/checkout';
 function App() {
   return (
     <div className="App">
+      <p style={{ margin: '16px 0' }}>
         Payment mixers react
-        <Checkout />
+      </p>
+      <Checkout />
     </div>
   );
 }

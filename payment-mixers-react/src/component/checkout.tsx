@@ -2,14 +2,40 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { MojitoCheckout, ThemeConfiguration } from '@mojito-inc/mixers';
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "@mui/material/Button";
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 const Checkout = () => {
   const { isAuthenticated, isLoading, getIdTokenClaims, loginWithPopup, logout } =
     useAuth0();
+
+  const getConfigData = React.useMemo(() => {
+    const data = sessionStorage.getItem('configData');
+    return data ? JSON.parse(data) : null;
+  }, []);
+  
   const [show, setShow] = useState(false);
+  const [configData, setConfigData] = useState({
+    orgId: getConfigData?.orgId || '',
+    lotId: getConfigData?.lotId || '',
+    invoiceId: getConfigData?.invoiceId || '',
+    listingId: getConfigData?.listingId || '',
+  });
+
   const openModal = () => {
+    if (typeof window != 'undefined') {
+      sessionStorage.setItem('configData', JSON.stringify(configData));
+    }
     setShow(true);
   };
+
+  const onChange = (event: string, name: string) => {
+    setConfigData(prev => ({
+      ...prev,
+      [name]: event,
+    }));
+  }
 
   const onClickLogin = async () => {
     if (isAuthenticated) {
@@ -90,23 +116,29 @@ const Checkout = () => {
       <Button disabled={!isAuthenticated || isLoading} onClick={openModal}>
         Open Mixers
       </Button>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Stack width={{ xs: '100%', sm: '100%', md: '100%', lg: '50%' }} sx={{ marginTop: '24px' }} alignItems="center" direction="column" spacing={2}>
+          <TextField label="Organization Id" fullWidth required placeholder="Enter organization id" value={configData.orgId} onChange={ (e) => onChange(e.target.value, 'orgId') } />
+          <TextField label="Lot id" fullWidth required placeholder="Enter lot id" value={configData.lotId} onChange={ (e) => onChange(e.target.value, 'lotId') } />
+          <TextField label="Listing id" fullWidth required placeholder="Enter listing id" value={configData.listingId} onChange={ (e) => onChange(e.target.value, 'listingId') } />
+          <TextField label="Invoice id" fullWidth placeholder="Enter invoice id" value={configData.invoiceId} onChange={ (e) => onChange(e.target.value, 'invoiceId') } />
+        </Stack>
+      </Box>
       <MojitoCheckout
         userInfo={{
-          email: 'kameshkishore.s@ionixxtech.com',
+          email: 'test@gmail.com',
         }}
         debug={ false }
         customTheme={ theme }
         token={ bearerToken }
         uri={ 'https://api-sandbox.mojito.xyz/query' }
         checkoutOptions={{
-          orgId: '',
-          lotId: '',
+          orgId: configData.orgId,
+          lotId: configData.lotId,
           quantity: 1,
-          collectionItemId: '',
-          invoiceId: '',
+          collectionItemId: configData.listingId,
+          invoiceId: configData.invoiceId,
           vertexEnabled: true,
-          successURL: 'http://localhost:3000/payments/success/?from=coinbase',
-          errorURL: 'http://localhost:3000/payments/error/?from=coinbase',
         }}
         uiConfiguration={{
           walletOptions: {
@@ -132,10 +164,10 @@ const Checkout = () => {
             onGoTo: () => {},
           },
           global: {
-            // logoSrc: require('../../public/img/logos/sotheby-logo.svg'),
+            logoSrc: 'https://assets-global.website-files.com/645e63ab36fc91c80f486747/645e63ab36fc91c80f486762_Group%201.svg',
           },
           walletConnect: {
-            orgId: '',
+            orgId: configData.orgId,
             paperClientId: '659af8f3-6a4f-4f53-8936-ba0fa32b0db0',
             walletConnectProjectId: '89dbf545d9dfa635307b233d7b4ce5d4',
             isWeb2Login: true,
